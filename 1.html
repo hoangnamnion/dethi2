@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Trắc Nghiệm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS QUIZ -->
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quiz-container {
+            width: 420px;
+            max-width: 95%;
+            background: #fff;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .quiz-header h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .progress {
+            height: 6px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #4caf50;
+            transition: width 0.3s;
+        }
+
+        .answers {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .answers li {
+            margin-bottom: 12px;
+        }
+
+        .answer-btn {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: #f9f9f9;
+            cursor: pointer;
+            text-align: left;
+            font-size: 15px;
+            transition: all 0.25s ease;
+        }
+
+        .answer-btn:hover {
+            background: #eef3ff;
+            border-color: #4f7cff;
+        }
+
+        .answer-btn.correct {
+            background: #e7f9ee;
+            border-color: #2ecc71;
+            color: #1e8449;
+        }
+
+        .answer-btn.wrong {
+            background: #fdecea;
+            border-color: #e74c3c;
+            color: #922b21;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .score {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .next-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #4f7cff;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .next-btn:hover {
+            background: #365ee6;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+    <div class="quiz-header">
+        <h2 id="question">Câu hỏi</h2>
+        <div class="progress">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+    </div>
+
+    <ul class="answers" id="answers"></ul>
+
+    <div class="quiz-footer">
+        <div class="score">Điểm: <span id="score">0</span></div>
+        <button class="next-btn" onclick="nextQuestion()">Tiếp</button>
+    </div>
+</div>
+
+<!-- JS QUIZ -->
+<script>
+    const quizData = [
+        {
+            question: "HTML là viết tắt của?",
+            answers: [
+                "Hyper Text Markup Language",
+                "High Text Machine Language",
+                "Hyperlinks Text Mark Language",
+                "Home Tool Markup Language"
+            ],
+            correct: 0
+        },
+        {
+            question: "CSS dùng để làm gì?",
+            answers: [
+                "Tạo cấu trúc web",
+                "Lưu dữ liệu",
+                "Trang trí giao diện",
+                "Viết logic"
+            ],
+            correct: 2
+        },
+        {
+            question: "JavaScript chạy ở đâu?",
+            answers: [
+                "Trình duyệt",
+                "Word",
+                "Excel",
+                "Paint"
+            ],
+            correct: 0
+        }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const scoreEl = document.getElementById("score");
+    const progressEl = document.getElementById("progress");
+
+    loadQuestion();
+
+    function loadQuestion() {
+        const q = quizData[current];
+        questionEl.textContent = q.question;
+        answersEl.innerHTML = "";
+
+        q.answers.forEach((ans, index) => {
+            const li = document.createElement("li");
+            const btn = document.createElement("button");
+            btn.className = "answer-btn";
+            btn.textContent = ans;
+
+            btn.onclick = () => checkAnswer(btn, index);
+            li.appendChild(btn);
+            answersEl.appendChild(li);
+        });
+
+        progressEl.style.width = ((current + 1) / quizData.length) * 100 + "%";
+    }
+
+    function checkAnswer(button, index) {
+        const correct = quizData[current].correct;
+        const buttons = document.querySelectorAll(".answer-btn");
+
+        buttons.forEach(btn => btn.disabled = true);
+
+        if (index === correct) {
+            button.classList.add("correct");
+            score++;
+            scoreEl.textContent = score;
+        } else {
+            button.classList.add("wrong");
+            buttons[correct].classList.add("correct");
+        }
+    }
+
+    function nextQuestion() {
+        current++;
+        if (current < quizData.length) {
+            loadQuestion();
+        } else {
+            questionEl.textContent = "🎉 Hoàn thành quiz!";
+            answersEl.innerHTML = "";
+        }
+    }
+</script>
+
+</body>
+</html>

